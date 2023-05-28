@@ -8,6 +8,7 @@ import logging
 import os
 import math
 import time
+import asyncio
 from pydantic import BaseModel
 
 from slack_sdk import WebClient
@@ -137,12 +138,12 @@ async def chat_completion(payload: ChatCompletionRequest):
         )
         threadId = response["ts"]
         if (response.get("message") != None):
-                if (response.get("message").get("thread_ts") != None):
-                    threadId = response.get("message").get("thread_ts")
-                    print("Reply created: ", threadId)
-                elif (response.get("message").get("ts") != None):
-                    threadId = response.get("message").get("ts")
-                    print("Thread created: ", threadId)
+            if (response.get("message").get("thread_ts") != None):
+                threadId = response.get("message").get("thread_ts")
+                print("Reply created: ", threadId)
+            elif (response.get("message").get("ts") != None):
+                threadId = response.get("message").get("ts")
+                print("Thread created: ", threadId)
         chatMap[threadId] = ChatThread()
 
         if (payload.stream == True):
@@ -192,12 +193,13 @@ async def chat_completion(payload: ChatCompletionRequest):
                         replies[idx] = reply.content
                     else:
                         replies.append(reply.content)
-                    created = reply.created
+                    if (reply.created >= created):
+                        created = reply.created
                     if (reply.typing == True):
                         typing = True
                 if (len(chat.replies) > 0 and typing == False):
                     chat.looping = False
-                time.sleep(0.25)
+                await asyncio.sleep(0.25)
             replyContent = '\n'.join(replies)
             data = ChatCompletionResponse(id=threadId, created=created, replies=chatMap.get(threadId).replies, choices=[
                                           ChatCompletionChoice(message=ChatCompletionMessage(role="assistant", content=replyContent))])
