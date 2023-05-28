@@ -7,7 +7,7 @@ This project is for learning and researching integration with Claude before Clau
 1. **DO NOT** send chat history in the request. Claude automatically treats messages in one Slack thread as one context window. You only need to send the newest user message in request. 
 2. `id` in response body is the Slack identifier of a thread (aka. `thread_ts`).
 3. You can pass `thread_ts` in request body if you want to reply to existing thread (aka. continuing a chat), otherwise a new thread will be created.
-4. `reply` (stream: true) in response body is the corresponding reply message identifier (Claude sometimes reply more than once, and those messages are streamed to you together as they appear, e.g. you might recieve delta from the first reply message after receivng delta from the second reply message)
+4. `reply` (stream: true) in response body is the corresponding reply message identifier (Claude sometimes reply more than once, and those messages are streamed to you in the order as they appear, e.g. you might recieve delta from the first reply message after receivng delta from the second reply message)
 5. `replies` (stream: false) in response body is the collection of all reply message identifiers responding to your user message (Claude sometimes reply more than once, and replies are joined as one content string)
 
 # Usage
