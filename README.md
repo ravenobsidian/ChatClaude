@@ -4,11 +4,11 @@ ChatClaude - A slack bot that interfaces Claude with OpenAI-like chat completion
 This project is for learning and researching integration with Claude before Claude API is publicly available. You are NOT ALLOWED to host this project as a service or in anyway exploit the Claude service and I take no responsibility. Please be considerate of the fact that we can access Claude for free with Slack is a privilege.
 
 # Differences between this API and OpenAI Chat Completion API
-1. **DO NOT** send chat history in the request. Each thread is a context window, every message in the thread is automatically handled by Claude as chat histoy. You only need to send the newest user message in request. 
-2. `id` in response is the `thread_ts` of the Slack thread.
-3. Pass `thread_ts` in request body if you want to reply to existing thread (aka. continuing a chat), otherwise a new thread in the channel will be created.
-4. `reply` (stream: true) is the corresponding reply message ts (Claude sometimes reply more than once, and those messages are streamed to you together as they appear)
-5. `replies` (streams: false) is the collection of all reply message ts responding to your user message (Claude sometimes reply more than once, and replies are joined in the response)
+1. **DO NOT** send chat history in the request. Claude automatically treats messages in one Slack thread as one context window. You only need to send the newest user message in request. 
+2. `id` in response body is the Slack identifier of a thread (aka. `thread_ts`).
+3. You can pass `thread_ts` in request body if you want to reply to existing thread (aka. continuing a chat), otherwise a new thread will be created.
+4. `reply` (stream: true) in response body is the corresponding reply message identifier (Claude sometimes reply more than once, and those messages are streamed to you together as they appear, e.g. you might recieve delta from the first reply message after receivng delta from the second reply message)
+5. `replies` (streams: false) in response body is the collection of all reply message identifiers responding to your user message (Claude sometimes reply more than once, and replies are joined as one content string)
 
 # Usage
 > Please refer to Slack Bolt getting started document: https://slack.dev/bolt-python/tutorial/getting-started#create-an-app
