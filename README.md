@@ -10,7 +10,23 @@ This project is for learning and researching integration with Claude before Clau
 4. `reply` (stream: true) is the corresponding reply message ts (Claude sometimes reply more than once, and those messages are streamed to you together as they appear)
 5. `replies` (streams: false) is the collection of all reply message ts responding to your user message (Claude sometimes reply more than once, and replies are joined in the response)
 
-# Run locally (Make sure to adjust how you enable venv based on your OS)
+# Usage
+> Please refer to Slack Bolt getting started document: https://slack.dev/bolt-python/tutorial/getting-started#create-an-app
+1. Create a Slack App
+2. In `Settings > Socket Mode` tab:
+    1. Turn `Socket Mode` on
+3. In `Features > OAuth & Permissions` tab:
+    1. Add the following Bot scopes: `channels:history`, `channels:read`, `chat:write`, `users:read`
+    2. Add the following User scopes (Claude does not respond to message sent from bot, so messages will be sent on your behalf): `channels:history`, `channels:read`, `chat:write`, `users:read`
+    3. Install App to your workspace
+    4. Save Bot token
+    5. Save User token
+    6. Save App token
+4. In `Features > Event Subscriptions` tab:
+    1. Turn `Enable Events` on
+    2. In `Subscribe to bot events`, add `message.channels`
+5. Invite your bot to the channel you want it to interact with Claude
+6. Run bot server locally (Make sure to adjust how you enable venv based on your OS)
 ```
 python -m venv venv
 source ./venv/bin/activate
