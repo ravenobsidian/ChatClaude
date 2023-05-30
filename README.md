@@ -31,10 +31,10 @@ This project is for learning and researching integration with Claude before Clau
 python -m venv venv
 source ./venv/bin/activate
 pip install -r requirement.txt
-export "SLACK_BOT_TOKEN" = YOUR_SLACK_BOT_TOKEN
-export "SLACK_USER_TOKEN" = YOUR_SLACK_USER_TOKEN
-export "SLACK_APP_TOKEN" = YOUR_SLACK_APP_TOKEN
-export "CLAUDE_CHANNEL" = YOUR_CHANNEL_NAME
+export SLACK_BOT_TOKEN=YOUR_SLACK_BOT_TOKEN
+export SLACK_USER_TOKEN=YOUR_SLACK_USER_TOKEN
+export SLACK_APP_TOKEN=YOUR_SLACK_APP_TOKEN
+export CLAUDE_CHANNEL=YOUR_CHANNEL_NAME
 uvicorn main:api
 ```
 
